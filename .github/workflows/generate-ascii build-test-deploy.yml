@@ -1,0 +1,41 @@
+name: Generate ASCII artwork
+ 
+on: push
+
+jobs:
+    ascii_job1:
+        runs-on: ubuntu-latest
+        steps:
+        - name: install cowsay
+          run: sudo apt-get install cowsay -y
+        
+        - name: execute cowsay
+          run: cowsay -f dragon "run for cover, I'm a dragon" >> dragon.txt
+
+        - name: upload file
+          uses: actions/upload-artifact@v7
+          with:
+           name: dragon-text-file
+           path: dragon.txt
+
+    test_job2:
+      needs: ascii_job1
+      runs-on: ubuntu-latest
+      - name: download file
+          uses: actions/download-artifact@v7
+          with:
+           name: dragon-text-file
+      - name: text
+         run: grep -i "dragon" dragon.txt
+
+    deploy_job3:
+      needs: test_job2
+      runs-on: ubuntu-latest
+      - name: download file
+          uses: actions/download-artifact@v7
+          with:
+           name: dragon-text-file
+      - name: deploy by reading it only
+         run: |
+          cat dragon.txt
+          ls -lrta
