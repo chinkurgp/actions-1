@@ -1,4 +1,4 @@
-name: Generate ASCII artwork with 2nd example
+name: Generate ASCII artwork with final example
 
 on:
   push:
