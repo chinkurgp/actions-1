@@ -12,5 +12,5 @@ jobs:
         - name: list repo files
           run: ls -lrta
 
-        -name: execute shell script
+        - name: execute shell script
           run: ./ascii-script.sh
